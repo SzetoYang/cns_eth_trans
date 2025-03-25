@@ -24,7 +24,8 @@ def parse_etherscan_tx(tx_data, wallet_address):
     result["block"] = int(tx_data["blockNumber"])
     tx_time = int(tx_data["timeStamp"])
     age_seconds = current_time - tx_time
-    result["age"] = f"{age_seconds // (24 * 3600)} days ago"
+    result["days_age"] = f"{age_seconds // (24 * 3600)} days ago"
+    result["age"] = tx_time
     result["from"] = tx_data["from"]
     result["to"] = tx_data["to"]
     result["amount"] = (
