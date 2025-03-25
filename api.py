@@ -15,7 +15,7 @@ ETHERSCAN_API_URL = os.getenv("ETHERSCAN_API_URL", "https://api.etherscan.io/v2/
 def parse_etherscan_tx(tx_data, wallet_address):
     current_time = int(time.time())
     result = {}
-    result["tx hash"] = tx_data["hash"]
+    result["tx_hash"] = tx_data["hash"]
     result["method"] = (
         "Contract Interaction" if tx_data["input"] != "0x" else "Transfer"
     )
@@ -45,7 +45,7 @@ def parse_etherscan_tx(tx_data, wallet_address):
 
 @app.get("/transactions/{address}")
 async def get_transactions(
-    address: str, startblock: int = 0, endblock: int = 99999999, sort: str = "asc"
+    address: str, startblock: int = 0, endblock: int = 99999999, sort: str = "desc"
 ):
     if not API_KEY:
         raise HTTPException(
