@@ -33,21 +33,21 @@ def parse_etherscan_tx(tx_data, wallet_address, chain="eth"):
     tx_time = int(tx_data["timeStamp"])
     age_seconds = current_time - tx_time
     result["days_age"] = f"{age_seconds // (24 * 3600)} days ago"
-    result["age"] = tx_time
+    result["time"] = tx_time
     result["from"] = tx_data["from"]
     result["to"] = tx_data["to"]
     currency = "ETH" if chain == "eth" else "BNB"
     result["amount"] = (
-        f"{int(tx_data['value']) / 10 ** 18} {currency}"
+        f"{int(tx_data['value']) / 10 ** 18}"
         if int(tx_data["value"]) > 0
-        else f"0 {currency}"
+        else f"0"
     )
     fee = int(tx_data["gasUsed"]) * int(tx_data["gasPrice"]) / 10 ** 18
-    result["txnfee"] = f"{fee:.6f} {currency}"
+    result["txnfee"] = f"{fee:.6f}"
     wallet_address = wallet_address.lower()
     result["type"] = (
-        "Sell" if result["from"].lower() == wallet_address
-        else "Buy" if result["to"].lower() == wallet_address else "N/A"
+        "Send" if result["from"].lower() == wallet_address
+        else "Receive" if result["to"].lower() == wallet_address else "N/A"
     )
     return result
 
@@ -60,17 +60,17 @@ def parse_token_tx(tx_data, wallet_address):
     tx_time = int(tx_data["timeStamp"])
     age_seconds = current_time - tx_time
     result["days_age"] = f"{age_seconds // (24 * 3600)} days ago"
-    result["age"] = tx_time
+    result["time"] = tx_time
     result["from"] = tx_data["from"]
     result["to"] = tx_data["to"]
     result["contractAddress"] = tx_data["contractAddress"]
     result["tokenName"] = tx_data["tokenName"]
     result["tokenSymbol"] = tx_data["tokenSymbol"]
-    result["value"] = f"{int(tx_data['value']) / 10 ** int(tx_data['tokenDecimal'])} {tx_data['tokenSymbol']}"
+    result["value"] = f"{int(tx_data['value']) / 10 ** int(tx_data['tokenDecimal'])}"
     wallet_address = wallet_address.lower()
     result["type"] = (
-        "Sell" if result["from"].lower() == wallet_address
-        else "Buy" if result["to"].lower() == wallet_address else "N/A"
+        "Send" if result["from"].lower() == wallet_address
+        else "Receive" if result["to"].lower() == wallet_address else "N/A"
     )
     return result
 
@@ -83,7 +83,7 @@ def parse_nft_tx(tx_data, wallet_address):
     tx_time = int(tx_data["timeStamp"])
     age_seconds = current_time - tx_time
     result["days_age"] = f"{age_seconds // (24 * 3600)} days ago"
-    result["age"] = tx_time
+    result["time"] = tx_time
     result["from"] = tx_data["from"]
     result["to"] = tx_data["to"]
     result["contractAddress"] = tx_data["contractAddress"]
@@ -92,8 +92,8 @@ def parse_nft_tx(tx_data, wallet_address):
     result["tokenID"] = tx_data["tokenID"]
     wallet_address = wallet_address.lower()
     result["type"] = (
-        "Sell" if result["from"].lower() == wallet_address
-        else "Buy" if result["to"].lower() == wallet_address else "N/A"
+        "Send" if result["from"].lower() == wallet_address
+        else "Receive" if result["to"].lower() == wallet_address else "N/A"
     )
     return result
 
@@ -106,7 +106,7 @@ def parse_erc1155_tx(tx_data, wallet_address):
     tx_time = int(tx_data["timeStamp"])
     age_seconds = current_time - tx_time
     result["days_age"] = f"{age_seconds // (24 * 3600)} days ago"
-    result["age"] = tx_time
+    result["time"] = tx_time
     result["from"] = tx_data["from"]
     result["to"] = tx_data["to"]
     result["contractAddress"] = tx_data["contractAddress"]
@@ -116,8 +116,8 @@ def parse_erc1155_tx(tx_data, wallet_address):
     result["tokenValue"] = tx_data["tokenValue"]
     wallet_address = wallet_address.lower()
     result["type"] = (
-        "Sell" if result["from"].lower() == wallet_address
-        else "Buy" if result["to"].lower() == wallet_address else "N/A"
+        "Send" if result["from"].lower() == wallet_address
+        else "Receive" if result["to"].lower() == wallet_address else "N/A"
     )
     return result
 
