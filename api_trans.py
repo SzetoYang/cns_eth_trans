@@ -48,8 +48,9 @@ async def get_all_transactions(
 
     result = {"status": "success", "chain": chain, "address": address, "transactions": {}}
 
-    connector = ProxyConnector.from_url('socks5://10.0.0.1:10080')
-    async with aiohttp.ClientSession(connector=connector) as session:
+    # connector = ProxyConnector.from_url('socks5://10.0.0.1:10080')
+    # async with aiohttp.ClientSession(connector=connector) as session:
+    async with aiohttp.ClientSession() as session:
         try:
             tasks = []
             task_mapping = []
