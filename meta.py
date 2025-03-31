@@ -227,10 +227,11 @@ API_META = {
             "api_key": ("headers", "TRON-PRO-API-KEY"),
             "address": [("params", "address")],
             "params": {
-                "limit": 10000,
+                "start": 45,
+                "limit": 100,
                 "start_timestamp": 0,
                 # "end_timestamp": int(time.time())*1000,
-                "end_timestamp": 9999999999999
+                # "end_timestamp": 9999999999999
             },
             "format_result": False,
             "results": {
